@@ -1,18 +1,22 @@
 class player {
 	constructor(ctx, canvasW, canvasH, keys) {
+		window.playerImg = new Image();
+        playerImg.src = "assets/player_handgun - copia.png";
+		playerImg.onload = ()=>{
+			this.w = 120,
+			this.h = 90
+			this.img = playerImg
+		}
 		this.ctx = ctx;
 		this.canvasW = innerWidth;
 		this.canvasH = innerHeight;
 		this.keys = keys;
-		this.img = new Image();
-		this.img.src = 'assets/zombie.png'; 
         this.direction = Math.PI/2;
-		this.w = 95;
-		this.h = 80;
+		
 		this.x = canvasW /2;
 		this.y = canvasH /2;
-		this.vx = 5;
-        this.vy = 3
+		this.vx = 10;
+        this.vy = 10
 		this.actions = {
 			right: false,
 			left: false,
@@ -20,7 +24,7 @@ class player {
             down: false,
 		};
 		this.frameIndex = 0;
-		this.frames = 17;
+		this.frames = 11;
 	
 
 
@@ -82,8 +86,9 @@ class player {
 
         this.frameWidth = this.img.width / this.frames;
 		this.frameHeight = this.img.height;
-        
-    
+		// event.preventDefault()
+        // const direction = Math.atan2((event.y - (this.y + this.canvasH/2)),(event.x - (this.x + this.canvasW/2)));
+		
 		this.ctx.drawImage(
 			this.img,
 			this.frameIndex * this.frameWidth,
@@ -95,6 +100,7 @@ class player {
 			this.w,
 			this.h
 		);
+		// this.ctx.rotate(-direction)
 	}
 
 	animateSprite() {
@@ -146,6 +152,7 @@ class player {
                 this.y += this.vy;
             }
         }
-        this.direction = Math.atan2((mouse.y - (this.y + stage.yMid)),(mouse.x - (this.x + stage.xMid)));
+		
+        
     }
 }

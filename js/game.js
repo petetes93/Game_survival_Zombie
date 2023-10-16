@@ -20,7 +20,7 @@ const Game = {
         
         // Agrega el evento de mousemove aquí
         canvas.addEventListener('mousemove', (event) => {
-            this.player.draw(event);
+            // this.player.draw(event);
         });
     },
 
@@ -42,9 +42,10 @@ const Game = {
         this.intervalId = setInterval(() => {
             this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
             // this.background.draw();
-        
+            
             this.player.draw();
             this.player.move();
+
             // this.obstacles.forEach((obstacle, index) => {
             //     obstacle.move();
             //     obstacle.draw();
