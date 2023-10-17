@@ -82,25 +82,26 @@ class player {
 		});
 	}
 
-	draw(event) {
-
+	draw() {
         this.frameWidth = this.img.width / this.frames;
-		this.frameHeight = this.img.height/2;
-	
-		
-		this.ctx.drawImage(
-			this.img,
-			this.frameIndex * this.frameWidth,
-			0,
-			this.frameWidth,
-			this.frameHeight,
-			this.x,
-			this.y,
-			this.w,
-			this.h
-		);
-		// this.ctx.rotate(-direction)
-	}
+        this.frameHeight = this.img.height / 2;
+
+        this.ctx.save(); // Guarda el contexto
+        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); // Centra la rotación
+        this.ctx.rotate(this.direction); // Aplica la rotación
+        this.ctx.drawImage(
+            this.img,
+            this.frameIndex * this.frameWidth,
+            0,
+            this.frameWidth,
+            this.frameHeight,
+            -this.w / 2,
+            -this.h / 2,
+            this.w,
+            this.h
+        );
+        this.ctx.restore(); // Restaura el contexto después de la rotación
+    }
 
 	animateSprite() {
 

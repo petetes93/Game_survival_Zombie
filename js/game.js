@@ -18,14 +18,21 @@ const Game = {
         this.canvasH = canvas.height = innerHeight;
         this.reset();
         
-        // Agrega el evento de mousemove aquí
-        // canvas.addEventListener('mousemove', (event) => {
-        //     this.player.draw(event);
-        // });
+        
+        canvas.addEventListener('mousemove', (event) => {
+            const mouseX = event.clientX - canvas.getBoundingClientRect().left;
+            const mouseY = event.clientY - canvas.getBoundingClientRect().top;
+
+            const dx = mouseX - this.player.x;
+            const dy = mouseY - this.player.y;
+            
+            this.player.direction = Math.atan2(dy, dx);
+        });
+        
     },
 
     reset: function () {
-        // this.background = new Background(this.ctx, this.canvasW, this.canvasH);
+        this.background = new Background(this.ctx, this.canvasW, this.canvasH);
         this.player = new player(this.ctx, this.canvasW, this.canvasH, this.keys);
         // this.zombie = new zombie(this.ctx, this.canvasW, this.canvasH)
         this.zombie = [];
@@ -34,10 +41,10 @@ const Game = {
 
     generateZombie: function () {
         this.zombie.push(
-            new zombie(this.ctx, this.canvasW, this.canvasH, this.player.h)
+            new zombie(this.ctx, this.canvasW, this.canvasH)
         );
         this.zombie.push(
-            new zombie(this.ctx, this.canvasW, this.canvasH, this.player.h)
+            new zombie(this.ctx, this.canvasW, this.canvasH)
         );
     },
 
@@ -45,7 +52,7 @@ const Game = {
         this.frameCounter = 0;
         this.intervalId = setInterval(() => {
             this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
-            // this.background.draw();
+            this.background.draw();
             
             this.player.draw();
             this.player.move();
@@ -53,6 +60,10 @@ const Game = {
             this.zombie.forEach((zombie, index) => {
                 zombie.move();
                 zombie.draw();
+
+
+
+
             
            // if (obstacle.y > this.player.y + this.player.h) {
                     

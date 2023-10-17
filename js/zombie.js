@@ -1,14 +1,14 @@
 class zombie {
-    constructor(ctx, canvasW, playerH, canvasH) {
+    constructor(ctx, canvasW, canvasH) {
         this.ctx = ctx;
         this.canvasW = canvasW;
         this.canvasH = canvasH;
         this.w = 120;
-        this.h = 90;
+        this.h = 120;
         this.img = new Image();
         this.img.src = 'assets/zombie.png';
-        this.x = canvasW -1500;
-        this.y =  canvasH-250; 
+        this.x = Math.floor(Math.random() * (canvasW - this.w))
+        this.y =  canvasH-1500; 
         this.dx = 5;
         this.dy = 5;
         this.frameIndex = 0;
@@ -56,9 +56,8 @@ class zombie {
 		}
 	}
     move() {
-        this.x += this.dx;
         this.y += this.dy;
-        Math.floor(Math.random() * (canvasW - this.w)) * (canvasH - this.h)
+      
         
     }
 }
