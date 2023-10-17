@@ -86,9 +86,9 @@ class player {
         this.frameWidth = this.img.width / this.frames;
         this.frameHeight = this.img.height / 2;
 
-        this.ctx.save(); // Guarda el contexto
-        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); // Centra la rotación
-        this.ctx.rotate(this.direction); // Aplica la rotación
+        this.ctx.save(); 
+        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); 
+        this.ctx.rotate(this.direction); 
         this.ctx.drawImage(
             this.img,
             this.frameIndex * this.frameWidth,
@@ -100,7 +100,7 @@ class player {
             this.w,
             this.h
         );
-        this.ctx.restore(); // Restaura el contexto después de la rotación
+        this.ctx.restore();  
     }
 
 	animateSprite() {

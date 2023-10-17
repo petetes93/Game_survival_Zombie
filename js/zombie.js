@@ -8,7 +8,7 @@ class zombie {
         this.img = new Image();
         this.img.src = 'assets/zombie.png';
         this.x = Math.floor(Math.random() * (canvasW - this.w))
-        this.y =  canvasH-1500; 
+        this.y =  -150; 
         this.dx = 5;
         this.dy = 5;
         this.frameIndex = 0;

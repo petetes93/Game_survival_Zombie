@@ -23,8 +23,8 @@ const Game = {
             const mouseX = event.clientX - canvas.getBoundingClientRect().left;
             const mouseY = event.clientY - canvas.getBoundingClientRect().top;
 
-            const dx = mouseX - this.player.x;
-            const dy = mouseY - this.player.y;
+            const dx = mouseX-60 - this.player.x;
+            const dy = mouseY-30 - this.player.y;
             
             this.player.direction = Math.atan2(dy, dx);
         });
