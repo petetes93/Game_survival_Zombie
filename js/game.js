@@ -40,12 +40,29 @@ const Game = {
     },
 
     generateZombie: function () {
-        this.zombie.push(
-            new zombie(this.ctx, this.canvasW, this.canvasH)
-        );
-        this.zombie.push(
-            new zombie(this.ctx, this.canvasW, this.canvasH)
-        );
+        const spawnSide = Math.floor(Math.random() * 4); // 0: arriba, 1: derecha, 2: abajo, 3: izquierda
+        let startX, startY;
+    
+        switch (spawnSide) {
+            case 0: 
+                startX = Math.random() * this.canvasW;
+                startY = -100;
+                break;
+            case 1: 
+                startX = this.canvasW + 100;
+                startY = Math.random() * this.canvasH;
+                break;
+            case 2: 
+                startX = Math.random() * this.canvasW;
+                startY = this.canvasH + 100;
+                break;
+            case 3: 
+                startX = -100;
+                startY = Math.random() * this.canvasH;
+                break;
+        }
+    
+        this.zombie.push(new zombie(this.ctx, this.canvasW, this.canvasH, startX, startY));
     },
 
     start: function () {
@@ -58,7 +75,8 @@ const Game = {
             this.player.move();
 
             this.zombie.forEach((zombie, index) => {
-                zombie.move();
+                zombie.animateSprite(); // Llama a la función animateSprite para cada zombie
+                zombie.move(this.player.x, this.player.y);
                 zombie.draw();
 
 
@@ -110,9 +128,7 @@ const Game = {
     // },
 
     clearZombie: function () {
-        this.zombie = this.zombie.filter(
-            (zombie) => zombie.x + zombie.w > 0
-        );
+        this.zombie = this.zombie.filter((zombie) => zombie.x + zombie.w > 0);
     },
 
     clear: function () {

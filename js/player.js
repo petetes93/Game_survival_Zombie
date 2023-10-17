@@ -33,6 +33,13 @@ class player {
 	}
 
 	setControls() {
+		document.addEventListener('click', (event) => {
+			const x = event.clientX;
+  			const y = event.clientY;
+			//   playerImg.src = "assets/muzzle_flash_01.png";
+			console.log(event);
+			
+		})
 		document.addEventListener('keydown', (event) => {
 			switch (event.code) {
 				case this.keys.RIGHT:

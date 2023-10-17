@@ -1,5 +1,5 @@
 class zombie {
-    constructor(ctx, canvasW, canvasH) {
+    constructor(ctx, canvasW, canvasH, startX, startY) {
         this.ctx = ctx;
         this.canvasW = canvasW;
         this.canvasH = canvasH;
@@ -7,14 +7,13 @@ class zombie {
         this.h = 120;
         this.img = new Image();
         this.img.src = 'assets/zombie.png';
-        this.x = Math.floor(Math.random() * (canvasW - this.w))
-        this.y =  -150; 
-        this.dx = 5;
-        this.dy = 5;
+        this.x = startX; // Posición inicial aleatoria
+        this.y = startY; // Posición inicial aleatoria
+        this.speed = 2; // Velocidad del zombie
+
+        this.frames = 17;
         this.frameIndex = 0;
-		this.frames = 18;
-	
-		this.frameCounter = 0;
+        this.frameCounter = 0;
     }
 	// getCollisionRect() {
        
@@ -29,17 +28,20 @@ class zombie {
         this.frameWidth = this.img.width / this.frames;
 		this.frameHeight = this.img.height;
 	
-		
+        this.ctx.save(); // Guarda el contexto
+        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); // Translada al centro del sprite
+        this.ctx.rotate(this.direction); // Rota el sprite hacia la dirección del jugador
+    
 		this.ctx.drawImage(
 			this.img,
 			this.frameIndex * this.frameWidth,
 			0,
 			this.frameWidth,
 			this.frameHeight,
-			this.x,
-			this.y,
-			this.w,
-			this.h)
+            -this.w / 2,
+            -this.h / 2,
+            this.w,
+            this.h)
       
         this.ctx.restore(); 
     }
@@ -55,9 +57,19 @@ class zombie {
 			}
 		}
 	}
-    move() {
-        this.y += this.dy;
-      
-        
+    move(playerX, playerY) {
+        const dx = playerX - this.x;
+        const dy = playerY - this.y;
+        const angle = Math.atan2(dy, dx);
+    
+        // Ajusta la dirección del zombie para que mire al jugador
+        this.direction = angle;
+    
+        // Calcula la velocidad en función de la dirección y la velocidad del zombie
+        const speedX = Math.cos(angle) * this.speed;
+        const speedY = Math.sin(angle) * this.speed;
+    
+        this.x += speedX;
+        this.y += speedY;
     }
 }
