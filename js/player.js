@@ -1,7 +1,7 @@
 class player {
 	constructor(ctx, canvasW, canvasH, keys) {
 		window.playerImg = new Image();
-        playerImg.src = "assets/player_handgun - copia.png";
+        playerImg.src = "assets/player_edit.png";
 		playerImg.onload = ()=>{
 			this.w = 120,
 			this.h = 90
@@ -24,7 +24,7 @@ class player {
             down: false,
 		};
 		this.frameIndex = 0;
-		this.frames = 11;
+		this.frames = 20;
 	
 
 
@@ -82,12 +82,11 @@ class player {
 		});
 	}
 
-	draw() {
+	draw(event) {
 
         this.frameWidth = this.img.width / this.frames;
-		this.frameHeight = this.img.height;
-		// event.preventDefault()
-        // const direction = Math.atan2((event.y - (this.y + this.canvasH/2)),(event.x - (this.x + this.canvasW/2)));
+		this.frameHeight = this.img.height/2;
+	
 		
 		this.ctx.drawImage(
 			this.img,

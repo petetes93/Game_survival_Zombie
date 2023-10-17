@@ -19,23 +19,27 @@ const Game = {
         this.reset();
         
         // Agrega el evento de mousemove aquí
-        canvas.addEventListener('mousemove', (event) => {
-            // this.player.draw(event);
-        });
+        // canvas.addEventListener('mousemove', (event) => {
+        //     this.player.draw(event);
+        // });
     },
 
     reset: function () {
         // this.background = new Background(this.ctx, this.canvasW, this.canvasH);
         this.player = new player(this.ctx, this.canvasW, this.canvasH, this.keys);
-        // this.obstacles = [];
+        // this.zombie = new zombie(this.ctx, this.canvasW, this.canvasH)
+        this.zombie = [];
         this.start();
     },
 
-    // generateObstacle: function () {
-    //     this.obstacles.push(
-    //         new Obstacle(this.ctx, this.canvasW, this.canvasH, this.player.h)
-    //     );
-    // },
+    generateZombie: function () {
+        this.zombie.push(
+            new zombie(this.ctx, this.canvasW, this.canvasH, this.player.h)
+        );
+        this.zombie.push(
+            new zombie(this.ctx, this.canvasW, this.canvasH, this.player.h)
+        );
+    },
 
     start: function () {
         this.frameCounter = 0;
@@ -46,26 +50,26 @@ const Game = {
             this.player.draw();
             this.player.move();
 
-            // this.obstacles.forEach((obstacle, index) => {
-            //     obstacle.move();
-            //     obstacle.draw();
-
-            //     if (obstacle.y > this.player.y + this.player.h) {
+            this.zombie.forEach((zombie, index) => {
+                zombie.move();
+                zombie.draw();
+            
+           // if (obstacle.y > this.player.y + this.player.h) {
                     
-            //         this.score += 1;
-            //         this.obstacles.splice(index, 1); 
-            //     }
-            // });
+                //     this.score += 1;
+                //     this.obstacles.splice(index, 1); 
+                // }
+            });
 
-            // if (this.frameCounter % 100 === 0) {
-            //     this.generateObstacle();
-            // }
+            if (this.frameCounter % 50 === 0) {
+                this.generateZombie();
+            }
 
             // if (this.isCollision()) {
             //     this.gameOver();
             // }
 
-            // this.clearObstacles();
+            this.clearZombie();
 
             // this.drawScoreboard(); 
 
@@ -86,19 +90,19 @@ const Game = {
 
    
 
-    drawScoreboard: function () {
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(0, 0, this.canvasW, 50);
-        this.ctx.fillStyle = 'yellow';
-        this.ctx.font = '24px Arial';
-        this.ctx.fillText(`Score: ${this.score}`, 20, 30);
-    },
-
-    // clearObstacles: function () {
-    //     this.obstacles = this.obstacles.filter(
-    //         (obstacle) => obstacle.x + obstacle.w > 0
-    //     );
+    // drawScoreboard: function () {
+    //     this.ctx.fillStyle = 'black';
+    //     this.ctx.fillRect(0, 0, this.canvasW, 50);
+    //     this.ctx.fillStyle = 'yellow';
+    //     this.ctx.font = '24px Arial';
+    //     this.ctx.fillText(`Score: ${this.score}`, 20, 30);
     // },
+
+    clearZombie: function () {
+        this.zombie = this.zombie.filter(
+            (zombie) => zombie.x + zombie.w > 0
+        );
+    },
 
     clear: function () {
         this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
