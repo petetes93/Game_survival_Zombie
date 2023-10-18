@@ -3,13 +3,16 @@ const Game = {
     canvasW: undefined,
     canvasH: undefined,
     fps: 60,
+    
     keys: {
         RIGHT: 'KeyD',
         LEFT: 'KeyA',
         UP: 'KeyW',
         DOWN: 'KeyS',
+        
     },
-   
+    
+    bullets: [],
     
     init: function () {
         const canvas = document.querySelector('canvas');
@@ -27,14 +30,27 @@ const Game = {
             const dy = mouseY-30 - this.player.y;
             
             this.player.direction = Math.atan2(dy, dx);
+            
+        
         });
+    	canvas.addEventListener('click', (event) => {
+			const x = event.clientX;
+  			const y = event.clientY;
+			//   playerImg.src = "assets/muzzle_flash_01.png";
+             // Calcula la posición inicial de la bala
+
+             // Crea una nueva bala y añádela a la lista de balas
+             this.bullets.push(new Bullet(this.ctx, this.player.x+this.player.w/2  , this.player.y + this.player.h/2, x,y));
+              // console.log('Disparo desde', x, y);
+			console.log('disparo');
+			
+		})
         
     },
 
     reset: function () {
         this.background = new Background(this.ctx, this.canvasW, this.canvasH);
         this.player = new player(this.ctx, this.canvasW, this.canvasH, this.keys);
-        // this.zombie = new zombie(this.ctx, this.canvasW, this.canvasH)
         this.zombie = [];
         this.start();
     },
@@ -69,15 +85,30 @@ const Game = {
         this.frameCounter = 0;
         this.intervalId = setInterval(() => {
             this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
+
             this.background.draw();
             
             this.player.draw();
             this.player.move();
 
+            
             this.zombie.forEach((zombie, index) => {
-                zombie.animateSprite(); // Llama a la función animateSprite para cada zombie
+                zombie.animateSprite(); 
                 zombie.move(this.player.x, this.player.y);
                 zombie.draw();
+
+            this.bullets = this.bullets.filter(
+                    (bullet) => bullet.x - bullet.radius < this.canvasW
+                )
+                
+            this.bullets.forEach((bullet) => {
+                    console.log(bullet);
+                    bullet.draw()
+                    bullet.move()
+                })
+                
+        
+        
 
 
 
@@ -90,7 +121,9 @@ const Game = {
                 // }
             });
 
-            if (this.frameCounter % 50 === 0) {
+
+
+            if (this.frameCounter % 200 === 0) {
                 this.generateZombie();
             }
 

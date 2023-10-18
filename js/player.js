@@ -1,11 +1,11 @@
 class player {
 	constructor(ctx, canvasW, canvasH, keys) {
-		window.playerImg = new Image();
-        playerImg.src = "assets/player_edit.png";
-		playerImg.onload = ()=>{
-			this.w = 120,
-			this.h = 90
-			this.img = playerImg
+        this.img = new Image();
+        this.img.src = "assets/player_edit.png";
+        this.img.onload = () => {
+            this.w = 120;
+            this.h = 90;
+			
 		}
 		this.ctx = ctx;
 		this.canvasW = innerWidth;
@@ -15,37 +15,38 @@ class player {
 		
 		this.x = canvasW /2;
 		this.y = canvasH /2;
-		this.vx = 10;
-        this.vy = 10
+		this.vx = 5;
+        this.vy = 5
 		this.actions = {
 			right: false,
 			left: false,
             up: false,
             down: false,
+           
 		};
+       
 		this.frameIndex = 0;
 		this.frames = 20;
 	
-
-
 		this.frameCounter = 0;
 		this.setControls();
 	}
 
 	setControls() {
-		document.addEventListener('click', (event) => {
-			const x = event.clientX;
-  			const y = event.clientY;
-			//   playerImg.src = "assets/muzzle_flash_01.png";
-			console.log(event);
+	
+
 			
-		})
+			
+		
 		document.addEventListener('keydown', (event) => {
 			switch (event.code) {
 				case this.keys.RIGHT:
 					this.actions.right = true;
 					break;
-
+                    
+                        
+    
+                       
 				case this.keys.LEFT:
 					this.actions.left = true;
 					break;
@@ -90,6 +91,7 @@ class player {
 	}
 
 	draw() {
+        
         this.frameWidth = this.img.width / this.frames;
         this.frameHeight = this.img.height / 2;
 
@@ -107,11 +109,15 @@ class player {
             this.w,
             this.h
         );
+        this.animateSprite()
+      
+        
         this.ctx.restore();  
     }
 
 	animateSprite() {
 
+      
 		this.frameCounter++;
 
 		if (this.frameCounter % 6 === 0) {
@@ -121,6 +127,9 @@ class player {
 				this.frameIndex = 0;
 			}
 		}
+
+        
+     
 	}
 
 	getCollisionRect() {
