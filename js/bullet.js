@@ -1,14 +1,25 @@
 class Bullet {
-    constructor(ctx, bulletX, bulletY, clientX, clientY) {
+    constructor(ctx, x, y, clientX, clientY) {
         this.ctx = ctx;
-        this.clientX= clientX
-        this.clientY= clientY
-        this.radius = 20;
-        this.x = bulletX;
-        this.y = bulletY;
+  
+        this.radius = 5;
+        
+        const dx = clientX - x;
+        const dy = clientY - y;
+     
+        
+        const length = Math.sqrt(dx * dx + dy * dy);
+        this.vx = (dx / length)*2;
+        this.vy = (dy / length)*2;
 
-        // Velocidad de la bala
-        this.vx = 1; // Ajusta esto según la velocidad deseada
+        this.x = x + this.vx*30
+		this.y = y + this.vy*30
+
+        this.frameIndex = 0;
+		this.frames = 1;
+	
+
+        
     }
 
     draw() {
@@ -22,20 +33,13 @@ class Bullet {
     }
 
     move() {
-        // Mover la bala hacia adelante
-        if (this.x < this.clientX) {
-            this.x = this.x + this.vx
-        }
-        if (this.x < this.clientX) {
-            this.x = this.x + this.vx
-        }
-        if (this.x < this.clientX) {
-            this.x = this.x + this.vx
-        }
-        if (this.x < this.clientX) {
-            this.x = this.x + this.vx
-        }
-
+       
+        
+    
+        https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/dx
+        this.x += this.vx;
+        this.y += this.vy;
+        
     }
 }
 

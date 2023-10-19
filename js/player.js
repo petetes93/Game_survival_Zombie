@@ -1,5 +1,5 @@
 class player {
-	constructor(ctx, canvasW, canvasH, keys) {
+	constructor(ctx, canvasW, canvasH, keys, a) {
         this.img = new Image();
         this.img.src = "assets/player_edit.png";
         this.img.onload = () => {
@@ -24,7 +24,6 @@ class player {
             down: false,
            
 		};
-       
 		this.frameIndex = 0;
 		this.frames = 20;
 	
@@ -143,6 +142,7 @@ class player {
     }
 
 	move() {
+        
         this.animateSprite();
     
         if (this.actions.right) {

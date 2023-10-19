@@ -29,6 +29,7 @@ const Game = {
             const dx = mouseX-60 - this.player.x;
             const dy = mouseY-30 - this.player.y;
             
+            
             this.player.direction = Math.atan2(dy, dx);
             
         
@@ -36,12 +37,16 @@ const Game = {
     	canvas.addEventListener('click', (event) => {
 			const x = event.clientX;
   			const y = event.clientY;
-			//   playerImg.src = "assets/muzzle_flash_01.png";
-             // Calcula la posición inicial de la bala
+            // this.player.img = new Image();
+			// this.playerImg.src = "assets/player shoot.png";
+            // this.player.frameIndex = 0;
+		    // this.player.frames = 3;
+		    // this.player.frameCounter = 0;
+            
 
-             // Crea una nueva bala y añádela a la lista de balas
+           
              this.bullets.push(new Bullet(this.ctx, this.player.x+this.player.w/2  , this.player.y + this.player.h/2, x,y));
-              // console.log('Disparo desde', x, y);
+              
 			console.log('disparo');
 			
 		})
@@ -56,6 +61,7 @@ const Game = {
     },
 
     generateZombie: function () {
+    
         const spawnSide = Math.floor(Math.random() * 4); // 0: arriba, 1: derecha, 2: abajo, 3: izquierda
         let startX, startY;
     
@@ -96,36 +102,36 @@ const Game = {
                 zombie.animateSprite(); 
                 zombie.move(this.player.x, this.player.y);
                 zombie.draw();
+            },
 
-            this.bullets = this.bullets.filter(
-                    (bullet) => bullet.x - bullet.radius < this.canvasW
-                )
+            this.bullets = this.bullets.filter((bullet) => bullet.x + bullet.radius > 0 && bullet.x - bullet.radius < this.canvasW && bullet.y + bullet.radius > 0 && bullet.y - bullet.radius < this.canvasH),
+
                 
             this.bullets.forEach((bullet) => {
                     console.log(bullet);
                     bullet.draw()
                     bullet.move()
-                })
+                }),
                 
         
         
+                console.log(this.bullets)
 
 
-
-
+                
             
            // if (obstacle.y > this.player.y + this.player.h) {
                     
                 //     this.score += 1;
                 //     this.obstacles.splice(index, 1); 
                 // }
-            });
+            );
 
 
 
-            if (this.frameCounter % 200 === 0) {
-                this.generateZombie();
-            }
+            // if (this.frameCounter % 200 === 0) {
+            //     this.generateZombie();
+            // }
 
             // if (this.isCollision()) {
             //     this.gameOver();
