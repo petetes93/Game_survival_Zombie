@@ -34,18 +34,19 @@ const Game = {
             
         
         });
+        const shootSound = document.getElementById("shootSound");
     	canvas.addEventListener('click', (event) => {
 			const x = event.clientX;
-  			const y = event.clientY;
-            // this.player.img = new Image();
-			// this.playerImg.src = "assets/player shoot.png";
-            // this.player.frameIndex = 0;
-		    // this.player.frames = 3;
-		    // this.player.frameCounter = 0;
+            const y = event.clientY;
             
+            
+            shootSound.pause();
+            shootSound.currentTime = 0;
+            shootSound.play(); 
 
-           
-             this.bullets.push(new Bullet(this.ctx, this.player.x+this.player.w/2  , this.player.y + this.player.h/2, x,y));
+		
+              this.bullets.push(new Bullet(this.ctx, this.player.x + this.player.w / 2, this.player.y + this.player.h / 2, x, y));
+            
               
 			console.log('disparo');
 			
@@ -116,35 +117,51 @@ const Game = {
         
         
                 console.log(this.bullets)
-
-
-                
-            
-           // if (obstacle.y > this.player.y + this.player.h) {
-                    
-                //     this.score += 1;
-                //     this.obstacles.splice(index, 1); 
-                // }
             );
 
-
-
-            // if (this.frameCounter % 200 === 0) {
-            //     this.generateZombie();
-            // }
-
+            this.ZombieCollisions();
+            
+            if (this.frameCounter % 200 === 0) {
+                this.generateZombie();
+            }
+            
+            this.clearZombie();
             // if (this.isCollision()) {
             //     this.gameOver();
             // }
 
-            this.clearZombie();
 
             // this.drawScoreboard(); 
 
             this.frameCounter++;
         }, 1000 / this.fps);
     },
+    ZombieCollisions: function () {
+        this.bullets.forEach((bullet) => {
+            if (!bullet.hit) {
+                this.zombie.forEach((zombie, zombieIndex) => {
+                    if (bullet.checkCollisionWithZombie(zombie)) {
+                        bullet.hit = true;
+                        this.zombie.splice(zombieIndex, 1);
+                       
+                          
+                    const bulletImpactSound = document.getElementById("bulletImpactSound");
+                    bulletImpactSound.play();
 
+                    
+                    const zombieImpactSound = document.getElementById("zombieImpactSound");
+                    zombieImpactSound.play();
+                    }
+                });
+            }
+        });
+    
+        this.bullets = this.bullets.filter((bullet) => !bullet.hit);
+    },
+    
+
+      
+    
 	// gameOver: function () {
 	// 	clearInterval(this.intervalId);
 	// 	alert(`GAME OVER! Puntuación final: ${this.score}`); 

@@ -15,6 +15,7 @@ class zombie {
         this.frameIndex = 0;
         this.frameCounter = 0;
     }
+    
 	// getCollisionRect() {
        
     //     return {
@@ -28,9 +29,9 @@ class zombie {
         this.frameWidth = this.img.width / this.frames;
 		this.frameHeight = this.img.height;
 	
-        this.ctx.save(); // Guarda el contexto
-        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); // Translada al centro del sprite
-        this.ctx.rotate(this.direction); // Rota el sprite hacia la dirección del jugador
+        this.ctx.save(); 
+        this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); 
+        this.ctx.rotate(this.direction); 
     
 		this.ctx.drawImage(
 			this.img,
@@ -62,10 +63,10 @@ class zombie {
         const dy = playerY - this.y;
         const angle = Math.atan2(dy, dx);
     
-        // Ajusta la dirección del zombie para que mire al jugador
+        
         this.direction = angle;
     
-        // Calcula la velocidad en función de la dirección y la velocidad del zombie
+        
         const speedX = Math.cos(angle) * this.speed;
         const speedY = Math.sin(angle) * this.speed;
     

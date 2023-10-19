@@ -97,6 +97,7 @@ class player {
         this.ctx.save(); 
         this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); 
         this.ctx.rotate(this.direction); 
+      
         this.ctx.drawImage(
             this.img,
             this.frameIndex * this.frameWidth,
