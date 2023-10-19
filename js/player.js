@@ -4,7 +4,7 @@ class player {
         this.img.src = "assets/player_edit.png";
         this.img.onload = () => {
             this.w = 120;
-            this.h = 90;
+            this.h = 120;
 			
 		}
 		this.ctx = ctx;
@@ -97,7 +97,9 @@ class player {
         this.ctx.save(); 
         this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); 
         this.ctx.rotate(this.direction); 
-      
+
+    
+        
         this.ctx.drawImage(
             this.img,
             this.frameIndex * this.frameWidth,

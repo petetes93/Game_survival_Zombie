@@ -39,7 +39,7 @@ const Game = {
 			const x = event.clientX;
             const y = event.clientY;
             
-            
+                
             shootSound.pause();
             shootSound.currentTime = 0;
             shootSound.play(); 
