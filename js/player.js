@@ -1,12 +1,14 @@
 class player {
-	constructor(ctx, canvasW, canvasH, keys, a) {
+	constructor(ctx, canvasW, canvasH, keys, w,h) {
         this.img = new Image();
-        this.img.src = "assets/player_edit.png";
-        this.img.onload = () => {
-            this.w = 120;
-            this.h = 120;
+        this.img.src = "assets/player_1linea.png";
+        
+        
+        
+        this.w = 100;
+        this.h = 100;
 			
-		}
+		
 		this.ctx = ctx;
 		this.canvasW = innerWidth;
 		this.canvasH = innerHeight;
@@ -24,8 +26,9 @@ class player {
             down: false,
            
 		};
+        
 		this.frameIndex = 0;
-		this.frames = 20;
+		this.frames = 40;
 	
 		this.frameCounter = 0;
 		this.setControls();
@@ -33,19 +36,14 @@ class player {
 
 	setControls() {
 	
-
-			
-			
-		
 		document.addEventListener('keydown', (event) => {
 			switch (event.code) {
 				case this.keys.RIGHT:
 					this.actions.right = true;
+                
+                
 					break;
-                    
-                        
-    
-                       
+             
 				case this.keys.LEFT:
 					this.actions.left = true;
 					break;
@@ -92,7 +90,7 @@ class player {
 	draw() {
         
         this.frameWidth = this.img.width / this.frames;
-        this.frameHeight = this.img.height / 2;
+        this.frameHeight = this.img.height ;
 
         this.ctx.save(); 
         this.ctx.translate(this.x + this.w / 2, this.y + this.h / 2); 

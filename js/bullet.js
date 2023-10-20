@@ -11,8 +11,8 @@ class Bullet {
         let dy = clientY - y;
         
         let length = Math.sqrt(dx * dx + dy * dy);
-        this.vx = (dx / length)*100;
-        this.vy = (dy / length)*100;
+        this.vx = (dx / length)*1;
+        this.vy = (dy / length)*1;
 
 
         // viendo el sentido de la velocidad
@@ -35,8 +35,8 @@ class Bullet {
          dy = clientY - this.y;
         
          length = Math.sqrt(dx * dx + dy * dy);
-        this.vx = (dx / length)*100;
-        this.vy = (dy / length)*100;
+        this.vx = (dx / length)*70;
+        this.vy = (dy / length)*70;
         this.rotation = Math.atan2(dy, dx)
 
         

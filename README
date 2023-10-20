@@ -1,0 +1,52 @@
+## Juego 
+​
+top down✅❌
+​
+## BACKGROUD
+​
+- FIJO Y SIMPLE✅
+- ANIMATICA MUERTE PLAYER **PREMIUM** I ❌
+​
+## PLAYER
+​
+POSCIÓN FIJA EN EL CENTRO✅
+MOVIMIENTO LIBRE EN TODAS DIRECCIONES **PREMIUM I* ✅
+​
+**SPRITE APUNTE SIEMPRE AL RATON** (DESDE EL LUNES)✅
+​
+DISPARA AKL HACER CLICK✅
+​
+Actions o sprites:
+	- IDLE✅
+	- DISPARA❌
+	- MOVE **PREMIUM I**✅
+​
+sprite: https://opengameart.org/content/animated-top-down-survivor-player
+​
+## ENEMY 
+​
+​
+SALEN OFFCANVAS DE TODAS LAS DIRECCIONES ALEATORIAMENTE✅
+SE MUEVEN HACIA EL JUGADOR EN LINEA RECTA DESDE DONDE SPAWNEAN✅
+​
+​
+CADA 100 PUNTOS INCREMENTA:
+ - Frecuencia spawn enemigos❌
+ - vida x1 **PREMIUM I**❌
+ 
+​
+Actions o sprites:
+	- MOVE✅
+	- ATTACK **PREMIUM I**✅
+​
+​
+https://opengameart.org/content/animated-top-down-zombie **zombie**
+​
+### PERDER
+​
+- ENEMIGOS COLISIONAN CON PLAYER❌
+​
+## SCORE
+​
+- TOTAL MUERTOS ❌
+- PUTUACION (TOTAL MUERTOS * VALOR MUERTE DEFINIDO)❌

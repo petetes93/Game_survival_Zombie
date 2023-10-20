@@ -29,13 +29,16 @@ const Game = {
             const dx = mouseX-60 - this.player.x;
             const dy = mouseY-30 - this.player.y;
             
-            
             this.player.direction = Math.atan2(dy, dx);
+            
+         
             
         
         });
+        
         const shootSound = document.getElementById("shootSound");
     	canvas.addEventListener('click', (event) => {
+            
 			const x = event.clientX;
             const y = event.clientY;
             
@@ -44,11 +47,25 @@ const Game = {
             shootSound.currentTime = 0;
             shootSound.play(); 
 
-		
-              this.bullets.push(new Bullet(this.ctx, this.player.x + this.player.w / 2, this.player.y + this.player.h / 2, x, y));
+
+            this.bullets.push(new Bullet(this.ctx, this.player.x + this.player.w / 2, this.player.y + this.player.h / 2, x, y));
+            
+            this.player.img.src='assets/player_shoot.png'
+            this.player.frames = 3
+            this.player.frameIndex = 0
+            this.player.frameCounter = 0; 
+            this.player.w = 100;
+            this.player.h = 100;
+            
+            setTimeout(() => {
+                this.player.img.src = 'assets/player_1linea.png';
+                this.player.frames = 40; 
+            }, 120);
+           
+
+       
             
               
-			console.log('disparo');
 			
 		})
         
