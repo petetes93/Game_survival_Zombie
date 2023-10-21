@@ -1,5 +1,5 @@
 class zombie {
-    constructor(ctx, canvasW, canvasH, startX, startY) {
+    constructor(ctx, canvasW, canvasH, startX, startY, speed) {
         this.ctx = ctx;
         this.canvasW = canvasW;
         this.canvasH = canvasH;
@@ -9,22 +9,24 @@ class zombie {
         this.img.src = 'assets/zombie.png';
         this.x = startX; // Posición inicial aleatoria
         this.y = startY; // Posición inicial aleatoria
-        this.speed = 2; // Velocidad del zombie
+        this.speed = speed; // Velocidad del zombie
+
+        this.life = 1
 
         this.frames = 17;
         this.frameIndex = 0;
         this.frameCounter = 0;
     }
     
-	// getCollisionRect() {
+	getCollisionRect() {
        
-    //     return {
-    //         x: this.x,
-    //         y: this.y,
-    //         width: this.w-50,
-    //         height: this.h-119.5,
-    //     };
-    // }
+        return {
+            x: this.x,
+            y: this.y,
+            width: this.w-50,
+            height: this.h-119.5,
+        };
+    }
     draw() {
         this.frameWidth = this.img.width / this.frames;
 		this.frameHeight = this.img.height;
@@ -45,6 +47,14 @@ class zombie {
             this.h)
       
         this.ctx.restore(); 
+    }
+
+    checkCollisionWithPlayer(player) {
+        const dx = this.x - (player.x + player.w / 2);
+        const dy = this.y - (player.y + player.h / 2); 
+        const distance = Math.sqrt(dx * dx + dy * dy); 
+
+        return distance < this.radius + player.w / 2; 
     }
     animateSprite() {
 

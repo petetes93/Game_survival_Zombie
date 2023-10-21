@@ -13,6 +13,14 @@ const Game = {
     },
     
     bullets: [],
+    clearBloodStains: function () {
+        this.bloodStains = []
+    },
+    bloodStains: [],
+    bloodImage: new Image(),
+    score: 0,
+    zombieSpeed: 2,
+    zombieCount: 0,
     
     init: function () {
         const canvas = document.querySelector('canvas');
@@ -21,7 +29,8 @@ const Game = {
         this.canvasH = canvas.height = innerHeight;
         this.reset();
         
-        
+        this.zombieCount = 1;
+
         canvas.addEventListener('mousemove', (event) => {
             const mouseX = event.clientX - canvas.getBoundingClientRect().left;
             const mouseY = event.clientY - canvas.getBoundingClientRect().top;
@@ -60,7 +69,7 @@ const Game = {
             setTimeout(() => {
                 this.player.img.src = 'assets/player_1linea.png';
                 this.player.frames = 40; 
-            }, 120);
+            }, 60);
            
 
        
@@ -68,7 +77,7 @@ const Game = {
               
 			
 		})
-        
+        this.bloodImage.src = 'assets/sangre.png';
     },
 
     reset: function () {
@@ -79,31 +88,38 @@ const Game = {
     },
 
     generateZombie: function () {
-    
-        const spawnSide = Math.floor(Math.random() * 4); // 0: arriba, 1: derecha, 2: abajo, 3: izquierda
-        let startX, startY;
-    
+    const spawnSide = Math.floor(Math.random() * 4);
+    let startX, startY;
+
+    if (this.score >= 100 && this.score % 100 === 0) {
+        this.zombieCount += 0.1; // Incrementa el número de zombies
+    }
+
+    for (let i = 0; i < this.zombieCount; i++) {
+        // 0: arriba, 1: derecha, 2: abajo, 3: izquierda
         switch (spawnSide) {
-            case 0: 
+            case 0:
                 startX = Math.random() * this.canvasW;
                 startY = -100;
                 break;
-            case 1: 
+            case 1:
                 startX = this.canvasW + 100;
                 startY = Math.random() * this.canvasH;
                 break;
-            case 2: 
+            case 2:
                 startX = Math.random() * this.canvasW;
                 startY = this.canvasH + 100;
                 break;
-            case 3: 
+            case 3:
                 startX = -100;
                 startY = Math.random() * this.canvasH;
                 break;
         }
-    
-        this.zombie.push(new zombie(this.ctx, this.canvasW, this.canvasH, startX, startY));
-    },
+
+        this.zombie.push(new zombie(this.ctx, this.canvasW, this.canvasH, startX, startY, this.zombieSpeed));
+    }
+},
+
 
     start: function () {
         this.frameCounter = 0;
@@ -111,44 +127,50 @@ const Game = {
             this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
 
             this.background.draw();
-            
+            this.drawBloodStains()
             this.player.draw();
             this.player.move();
-
+            
             
             this.zombie.forEach((zombie, index) => {
                 zombie.animateSprite(); 
                 zombie.move(this.player.x, this.player.y);
                 zombie.draw();
             },
-
+            
+            
             this.bullets = this.bullets.filter((bullet) => bullet.x + bullet.radius > 0 && bullet.x - bullet.radius < this.canvasW && bullet.y + bullet.radius > 0 && bullet.y - bullet.radius < this.canvasH),
-
-                
+            
+            
             this.bullets.forEach((bullet) => {
-                    console.log(bullet);
-                    bullet.draw()
+                console.log(bullet);
+                bullet.draw()
                     bullet.move()
                 }),
                 
-        
-        
-                console.log(this.bullets)
-            );
-
+                
+                
+                
+                );
+                
+           
             this.ZombieCollisions();
+            this.handlePlayerZombieCollisions()
             
-            if (this.frameCounter % 200 === 0) {
+            if (this.frameCounter % 100 === 0) {
                 this.generateZombie();
             }
             
             this.clearZombie();
+            
+
+            //BUUGGGGGGGGG
             // if (this.isCollision()) {
             //     this.gameOver();
             // }
 
-
-            // this.drawScoreboard(); 
+            
+            this.drawScore()
 
             this.frameCounter++;
         }, 1000 / this.fps);
@@ -159,47 +181,121 @@ const Game = {
                 this.zombie.forEach((zombie, zombieIndex) => {
                     if (bullet.checkCollisionWithZombie(zombie)) {
                         bullet.hit = true;
+                        zombie.life--; 
+                        console.log(zombie); 
+
+                        this.bloodStains.push({ x: zombie.x, y: zombie.y });
                         this.zombie.splice(zombieIndex, 1);
-                       
-                          
-                    const bulletImpactSound = document.getElementById("bulletImpactSound");
-                    bulletImpactSound.play();
+
+                        const bulletImpactSound = document.getElementById("bulletImpactSound");
+                        bulletImpactSound.play();
+    
+                        if (zombie.life <= 0) {
+                            this.zombie.splice(zombieIndex, 0);
+                            this.zombie.splice(zombieIndex, 0); 
+                            this.score += 10;
+    
+                            const zombieImpactSound = document.getElementById("zombieImpactSound");
+                            zombieImpactSound.play();
+                        }
+
+                        if (this.score >= 100 && this.score % 100 === 0) {
+                            this.zombieSpeed += 0.5; 
+                            
+                        }
+                        
+                    }
 
                     
-                    const zombieImpactSound = document.getElementById("zombieImpactSound");
-                    zombieImpactSound.play();
-                    }
                 });
             }
+             
         });
     
         this.bullets = this.bullets.filter((bullet) => !bullet.hit);
     },
+
+    checkCollisionWithPlayer: function(zombie, player) {
+        
+        const playerLeft = player.x+50;
+        const playerRight = player.x + player.w;
+        const playerTop = player.y+50;
+        const playerBottom = player.y + player.h;
     
-
-      
+        const zombieLeft = zombie.x+30;
+        const zombieRight = zombie.x + zombie.w;
+        const zombieTop = zombie.y+50;
+        const zombieBottom = zombie.y + zombie.h;
     
-	// gameOver: function () {
-	// 	clearInterval(this.intervalId);
-	// 	alert(`GAME OVER! Puntuación final: ${this.score}`); 
-	
-	// 	this.score = 0; 
-	
-	// 	if (confirm('¿Volver a jugar?')) {
-	// 		this.reset();
-	// 	}
-	// },
+       
+        if (
+            playerLeft < zombieRight &&
+            playerRight > zombieLeft &&
+            playerTop < zombieBottom &&
+            playerBottom > zombieTop
+        ) {
+            return true;
+        }
+    
+        return false;
+    },
 
-   
+    handlePlayerZombieCollisions: function () {
+        this.zombie.forEach((zombie, index) => {
+            if (this.checkCollisionWithPlayer(zombie, this.player)) {
+                this.player.life--; 
+                this.zombie.splice(index, 0); 
+                const muerto = document.getElementById("dead");
+                        muerto.play();
+                if (this.player.life <= 0) {
+                   
+                    this.gameOver();
+                }
+            }
+        });
+    },
+    
+    drawBloodStains: function () {
+        this.bloodStains.forEach((stain) => {
+            const bloodImage = new Image();
+            bloodImage.src = 'assets/sangre.png';
+            
+            this.ctx.drawImage(this.bloodImage, stain.x, stain.y);
+        });
+    },
 
-    // drawScoreboard: function () {
-    //     this.ctx.fillStyle = 'black';
-    //     this.ctx.fillRect(0, 0, this.canvasW, 50);
-    //     this.ctx.fillStyle = 'yellow';
-    //     this.ctx.font = '24px Arial';
-    //     this.ctx.fillText(`Score: ${this.score}`, 20, 30);
-    // },
 
+
+    drawScore: function () {
+        this.ctx.fillStyle = 'white';
+        this.ctx.font = '24px Arial';
+        this.ctx.fillText(`Puntuación: ${this.score}`, 10, 30);
+    },
+
+
+
+
+
+
+    gameOver: function () {
+        clearInterval(this.intervalId);
+        const zombiesAsesinados = this.zombie.length; 
+        if (confirm(`        GAME OVER!!!
+
+        Zombies asesinados: ${zombiesAsesinados}
+
+        ¿Deseas volver a jugar?`)) {
+            this.clearBloodStains();
+            this.score = 0;
+            this.zombieSpeed = 2;
+            this.reset();
+        }
+    },
+    
+    
+    
+    
+    
     clearZombie: function () {
         this.zombie = this.zombie.filter((zombie) => zombie.x + zombie.w > 0);
     },

@@ -15,7 +15,7 @@ class Bullet {
         this.vy = (dy / length)*1;
 
 
-        // viendo el sentido de la velocidad
+      
     
         this.x = x + this.vx
 		this.y = y + this.vy

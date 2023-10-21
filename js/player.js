@@ -3,7 +3,7 @@ class player {
         this.img = new Image();
         this.img.src = "assets/player_1linea.png";
         
-        
+        this.life = 1
         
         this.w = 100;
         this.h = 100;
