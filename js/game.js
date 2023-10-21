@@ -92,7 +92,7 @@ const Game = {
     let startX, startY;
 
     if (this.score >= 100 && this.score % 100 === 0) {
-        this.zombieCount += 0.1; // Incrementa el número de zombies
+        this.zombieCount += 0.1; 
     }
 
     for (let i = 0; i < this.zombieCount; i++) {
@@ -275,20 +275,34 @@ const Game = {
 
 
 
+    
 
+   gameOver: function () {
+    clearInterval(this.intervalId);
+    const gameOverScreen = document.getElementById('game-over-screen');
+    gameOverScreen.style.display = "";
+    
+    
+    const backgroundMusic = document.getElementById("background-music");
+    backgroundMusic.pause();
 
-    gameOver: function () {
-        clearInterval(this.intervalId);
-         
-        if (confirm(`         GAME OVER!!!
-         puntuación final: ${this.score}
-         ¿Deseas volver a jugar?`)) {
-            this.clearBloodStains();
-            this.score = 0;
-            this.zombieSpeed = 2;
-            this.reset();
-        }
-    },
+    
+    const gameOverMusic = document.getElementById("game-over-music");
+    gameOverMusic.play();
+    
+    if (confirm(`         GAME OVER!!!
+    puntuación final: ${this.score}
+    ¿Deseas volver a jugar?`)) {
+        this.clearBloodStains();
+        this.score = 0;
+        this.zombieCount = 1;
+        this.zombieSpeed = 2;
+        const gameOverScreen= document.getElementById('game-over-screen')
+        gameOverScreen.style.display = ""
+        
+    }
+},
+
     
     
     

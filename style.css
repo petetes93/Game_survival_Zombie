@@ -1,7 +1,89 @@
 body {
 	margin: 0;
+	
+	background-color: #000; 
+	
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	
 }
 
 canvas {
 	display: block;
 }
+
+.cartel {
+    max-width: 100%;
+    text-align: center;
+}
+.cartel img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+
+.cartel {
+    max-width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+}
+
+.cartel img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#start-button {
+    background-color: #a41701;
+    color: #fff;
+    border: none;
+    padding: 20px 40px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+#start-button:hover {
+    background-color: #e1850c;
+}
+
+#game-over-screen {
+    width: 100%;
+    position: absolute;
+    height: 100vh;
+    background-color: #000;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#game-over-screen > img {
+    margin-top: 130px;
+}
+
+#restart-button {
+    background-color: #a41701;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+	padding: 20px 40px;
+ 
+	
+}
+#restart-button:hover {
+    background-color: #e1850c;
+}
+
+
