@@ -1,12 +1,17 @@
 window.addEventListener('load', () => {
+	
     const startSound = document.getElementById("intro");
     const startButton = document.getElementById("start-button");
     const backgroundMusic = document.getElementById("background-music"); 
     const gameOverScreen = document.getElementById('game-over-screen');
     const restartButton = document.getElementById('restart-button');
     const gameovermusic = document.getElementById("game-over-music"); 
-
+	
+	startSound.volume = 0.7
+	backgroundMusic.volume = 0.5
+	gameovermusic.volume = 0.5
     startSound.play();
+	
 
     startButton.addEventListener('click', function() {
         this.style.display = 'none';
@@ -21,5 +26,6 @@ window.addEventListener('load', () => {
         backgroundMusic.pause(); 
         Game.reset();
     });
+
 });
 

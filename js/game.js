@@ -54,6 +54,7 @@ const Game = {
                 
             shootSound.pause();
             shootSound.currentTime = 0;
+            shootSound.volume = 0.2
             shootSound.play(); 
 
 
@@ -188,6 +189,7 @@ const Game = {
                         this.zombie.splice(zombieIndex, 1);
 
                         const bulletImpactSound = document.getElementById("bulletImpactSound");
+                        bulletImpactSound.volume = 0.2
                         bulletImpactSound.play();
     
                         if (zombie.life <= 0) {
@@ -196,6 +198,7 @@ const Game = {
                             this.score += 10;
     
                             const zombieImpactSound = document.getElementById("zombieImpactSound");
+                            zombieImpactSound.volume = 0.2
                             zombieImpactSound.play();
                         }
 
@@ -271,6 +274,7 @@ const Game = {
         this.ctx.font = '24px Arial';
         this.ctx.fillText(`Puntuación: ${this.score}`, 10, 30);
     },
+
 
 
 
