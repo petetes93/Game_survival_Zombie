@@ -26,8 +26,10 @@ class zombie {
             width: this.w-50,
             height: this.h-119.5,
         };
+
     }
     draw() {
+            console.log('aaa');
         this.frameWidth = this.img.width / this.frames;
 		this.frameHeight = this.img.height;
 	
