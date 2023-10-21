@@ -279,12 +279,10 @@ const Game = {
 
     gameOver: function () {
         clearInterval(this.intervalId);
-        const zombiesAsesinados = this.zombie.length; 
-        if (confirm(`        GAME OVER!!!
-
-        Zombies asesinados: ${zombiesAsesinados}
-
-        ¿Deseas volver a jugar?`)) {
+         
+        if (confirm(`         GAME OVER!!!
+         puntuación final: ${this.score}
+         ¿Deseas volver a jugar?`)) {
             this.clearBloodStains();
             this.score = 0;
             this.zombieSpeed = 2;
