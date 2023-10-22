@@ -93,7 +93,7 @@ const Game = {
     let startX, startY;
 
     if (this.score >= 100 && this.score % 100 === 0) {
-        this.zombieCount += 0.1; 
+        this.zombieCount += 0.5; 
     }
 
     for (let i = 0; i < this.zombieCount; i++) {
@@ -203,7 +203,7 @@ const Game = {
                         }
 
                         if (this.score >= 100 && this.score % 100 === 0) {
-                            this.zombieSpeed += 0.5; 
+                            this.zombieSpeed += 0.2; 
                             
                         }
                         

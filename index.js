@@ -7,23 +7,26 @@ window.addEventListener('load', () => {
     const restartButton = document.getElementById('restart-button');
     const gameovermusic = document.getElementById("game-over-music"); 
 	
+
 	startSound.volume = 0.7
 	backgroundMusic.volume = 0.5
 	gameovermusic.volume = 0.5
     startSound.play();
 	
-
+    
     startButton.addEventListener('click', function() {
         this.style.display = 'none';
         startSound.pause();
         backgroundMusic.play(); 
         Game.init();
     });
-
+    
     restartButton.addEventListener('click', function() {
         gameOverScreen.style.display = "none";
-        gameovermusic.play(); 
         backgroundMusic.pause(); 
+        gameovermusic.play(); 
+        gameovermusic.pause()
+        backgroundMusic.play(); //revisar porque aqui hay un bugg!!!
         Game.reset();
     });
 
